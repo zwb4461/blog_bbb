@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这里的登录流程以及导航守卫是针对判断用户是否登录来控制该用户是否有权限访问该系统  至于菜单权限、按钮权限、数据权限是另一块  这里不包含动态路由的内容   js-cookie简介:​    cookie是一个存储在客户端的字符串属性,可以用它对当前网页的cookie进行读,写,增.删等操作;javascript能够用document对象的cookie属性对cookie进行操作。 安装引入12n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="登录流程、导航守卫、js-cookie的使用">
+<meta property="og:url" content="http://example.com/2021/08/06/%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E3%80%81%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/index.html">
+<meta property="og:site_name" content="bbbbb博客">
+<meta property="og:description" content="这里的登录流程以及导航守卫是针对判断用户是否登录来控制该用户是否有权限访问该系统  至于菜单权限、按钮权限、数据权限是另一块  这里不包含动态路由的内容   js-cookie简介:​    cookie是一个存储在客户端的字符串属性,可以用它对当前网页的cookie进行读,写,增.删等操作;javascript能够用document对象的cookie属性对cookie进行操作。 安装引入12n">
+<meta property="og:locale">
+<meta property="og:image" content="https://zwb4461.oss-cn-shanghai.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E7%94%A8/%E5%89%8D%E7%AB%AF%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB.png">
+<meta property="article:published_time" content="2021-08-06T08:05:55.000Z">
+<meta property="article:modified_time" content="2021-08-06T08:43:53.477Z">
+<meta property="article:author" content="bbbbb">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zwb4461.oss-cn-shanghai.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E7%94%A8/%E5%89%8D%E7%AB%AF%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2021/08/06/登录流程、导航守卫/"/>
+
+
+
+
+
+  <title>登录流程、导航守卫、js-cookie的使用 | bbbbb博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bbbbb博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">小b</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/06/%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E3%80%81%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bbbbb博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">登录流程、导航守卫、js-cookie的使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-06T16:05:55+08:00">
+                2021-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue-admin-template/" itemprop="url" rel="index">
+                    <span itemprop="name">vue-admin-template</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><p>这里的登录流程以及导航守卫是针对<strong>判断用户是否登录</strong>来控制该用户<strong>是否有权限访问该系统</strong></p>
+</li>
+<li><p>至于菜单权限、按钮权限、数据权限是另一块</p>
+</li>
+<li><p>这里不包含动态路由的内容</p>
+</li>
+</ul>
+<h5 id="js-cookie简介"><a href="#js-cookie简介" class="headerlink" title="js-cookie简介:"></a>js-cookie简介:</h5><p>​    cookie是一个存储在客户端的字符串属性,可以用它对当前网页的cookie进行读,写,增.删等操作;javascript能够用document对象的cookie属性对cookie进行操作。</p>
+<h6 id="安装引入"><a href="#安装引入" class="headerlink" title="安装引入"></a>安装引入</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install js-cookie --save</span><br><span class="line"><span class="keyword">import</span> Cookies <span class="keyword">from</span> <span class="string">&#x27;js-cookie&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="登录流程"><a href="#登录流程" class="headerlink" title="登录流程"></a>登录流程</h4><ol>
+<li><h5 id="login-vue登录页面"><a href="#login-vue登录页面" class="headerlink" title="login.vue登录页面"></a>login.vue登录页面</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//data</span></span><br><span class="line">	<span class="attr">redirect</span>: <span class="literal">undefined</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//watch</span></span><br><span class="line"> 	<span class="attr">$route</span>: &#123;</span><br><span class="line">   <span class="comment">//?回调函数。即监听到变化时应该执行的函数</span></span><br><span class="line">   <span class="attr">handler</span>: <span class="function"><span class="keyword">function</span>(<span class="params">route</span>) </span>&#123;</span><br><span class="line">     <span class="built_in">this</span>.redirect = route.query &amp;&amp; route.query.redirect</span><br><span class="line">   &#125;,</span><br><span class="line">   <span class="attr">immediate</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//methods</span></span><br><span class="line">	<span class="comment">//点击登录按钮</span></span><br><span class="line"> 	<span class="built_in">this</span>.$store.dispatch(<span class="string">&#x27;user/login&#x27;</span>, <span class="built_in">this</span>.loginForm).then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line"> 	<span class="comment">//? &#123; path: this.redirect || &#x27;/&#x27; &#125; 这里的redirect意思是:</span></span><br><span class="line">     <span class="comment">//? 导航守卫中会在跳转登录页是url携带本来要访问的页面(但无权限所以去了登录页)</span></span><br><span class="line">     <span class="comment">//? 这里这样写的好处是 重新登录后会直接跳转到之前要去的页面</span></span><br><span class="line">     <span class="built_in">this</span>.$router.push(&#123; <span class="attr">path</span>: <span class="built_in">this</span>.redirect || <span class="string">&#x27;/&#x27;</span> &#125;)</span><br><span class="line">  &#125;).catch(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  		·················</span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="store-modules-user中的登录方法和拉取用户信息方法"><a href="#store-modules-user中的登录方法和拉取用户信息方法" class="headerlink" title="store/modules/user中的登录方法和拉取用户信息方法"></a>store/modules/user中的登录方法和拉取用户信息方法</h5> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; getToken, setToken, removeToken &#125; <span class="keyword">from</span> <span class="string">&quot;@/utils/auth&quot;</span>;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//state</span></span><br><span class="line"><span class="keyword">const</span> getDefaultState = <span class="function">() =&gt;</span> &#123;</span><br><span class="line"> <span class="keyword">return</span> &#123;</span><br><span class="line">  	<span class="attr">token</span>: getToken(),</span><br><span class="line">  	<span class="attr">name</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">  	<span class="attr">avatar</span>: <span class="string">&quot;&quot;</span></span><br><span class="line">  &#125;;</span><br><span class="line"> &#125;;</span><br><span class="line"><span class="keyword">const</span> state = getDefaultState();</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">//mutations</span></span><br><span class="line">SET_TOKEN: <span class="function">(<span class="params">state, token</span>) =&gt;</span> &#123;</span><br><span class="line"> 	state.token = token;</span><br><span class="line">&#125;,</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">//actions</span></span><br><span class="line"><span class="comment">//? 用户登录</span></span><br><span class="line"><span class="function"><span class="title">login</span>(<span class="params">&#123; commit &#125;, userInfo</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; username, password &#125; = userInfo;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    login(&#123; <span class="attr">username</span>: username.trim(), <span class="attr">password</span>: password &#125;)</span><br><span class="line">      .then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; data &#125; = res;</span><br><span class="line">        <span class="comment">//? 设置token-存入store</span></span><br><span class="line">        commit(<span class="string">&quot;SET_TOKEN&quot;</span>, data.token);</span><br><span class="line">        <span class="comment">//? 设置token-存入Cookie</span></span><br><span class="line">        setToken(data.token);</span><br><span class="line">        <span class="comment">//? 登录成功后会执行跳转路由，这时候导航守卫会执行查询是否store存在用户信息，</span></span><br><span class="line">        <span class="comment">//? 不存在则通过token去查询，查询成功则访问页面，否则重新登录</span></span><br><span class="line">        resolve();</span><br><span class="line">      &#125;)</span><br><span class="line">      .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">        reject(err);</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;,</span><br><span class="line">    </span><br><span class="line"><span class="comment">//? 获取用户信息</span></span><br><span class="line"><span class="function"><span class="title">getInfo</span>(<span class="params">&#123; commit, state &#125;</span>)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//? 使用登录时获得的token调接口拉取用户信息</span></span><br><span class="line">    getInfo(state.token)</span><br><span class="line">      .then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; data &#125; = res;</span><br><span class="line">        <span class="keyword">if</span> (!data) &#123;</span><br><span class="line">          <span class="keyword">return</span> reject(<span class="string">&quot;验证失败，请重新登录.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">const</span> &#123; name, avatar &#125; = data;</span><br><span class="line">        <span class="comment">//?设置名字和头像到store中</span></span><br><span class="line">        commit(<span class="string">&quot;SET_NAME&quot;</span>, name);</span><br><span class="line">        commit(<span class="string">&quot;SET_AVATAR&quot;</span>, avatar);</span><br><span class="line">        resolve(data);</span><br><span class="line">      &#125;)</span><br><span class="line">      .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">        reject(err);</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></li>
+<li><h5 id="store-modules-user中的登录方法"><a href="#store-modules-user中的登录方法" class="headerlink" title="store/modules/user中的登录方法"></a>store/modules/user中的登录方法</h5> <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Cookies <span class="keyword">from</span> <span class="string">&quot;js-cookie&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//? toekn的键</span></span><br><span class="line"><span class="keyword">const</span> TokenKey = <span class="string">&quot;vue_admin_template_token&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//? 查询token</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getToken</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> Cookies.get(TokenKey);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//?设置token</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">setToken</span>(<span class="params">token</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> Cookies.set(TokenKey, token);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//?删除token</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">removeToken</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> Cookies.remove(TokenKey);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><h5 id="src-permission-js导航守卫"><a href="#src-permission-js导航守卫" class="headerlink" title="src/permission.js导航守卫"></a>src/permission.js导航守卫</h5><p> ```javascript<br>import router from “./router”;<br>import store from “./store”;<br>import { Message } from “element-ui”;<br>import NProgress from “nprogress”; // progress bar<br>import “nprogress/nprogress.css”; // progress bar style<br>import { getToken } from “@/utils/auth”; // get token from cookie<br>import getPageTitle from “@/utils/get-page-title”;</p>
+<p>NProgress.configure({ showSpinner: false }); // NProgress Configuration</p>
+<p>const whiteList = [“/login”]; //? 白名单</p>
+<p>router.beforeEach(async (to, from, next) =&gt; {<br>  //? 进度条开始<br>  NProgress.start();</p>
+<p>  //? 设置页面标题<br>  document.title = getPageTitle(to.meta.title);</p>
+<p>  // determine whether the user has logged in<br>  const hasToken = getToken();</p>
+<pre><code>if (hasToken) &#123;
+//?如果存在token
+if (to.path === &quot;/login&quot;) &#123;
+  //? 并且要去登录页面，则重定向到主页
+  next(&#123; path: &quot;/&quot; &#125;);
+  NProgress.done();
+&#125; else &#123;
+  //? 访问登录页以外的页面
+  const hasGetUserInfo = store.getters.name;
+  if (hasGetUserInfo) &#123;
+    next();
+  &#125; else &#123;
+    try &#123;
+      //? 重新拉取用户信息
+      await store.dispatch(&quot;user/getInfo&quot;);
+      next();
+    &#125; catch (error) &#123;
+      //? 移除token并且重新登录
+      await store.dispatch(&quot;user/resetToken&quot;);
+      Message.error(error || &quot;Has Error&quot;);
+      next(`/login?redirect=$&#123;to.path&#125;`);
+      NProgress.done();
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>  } else {</p>
+<pre><code>//? 如果不存在token
+if (whiteList.indexOf(to.path) !== -1) &#123;
+  //? 要跳转的路径在白名单中
+  next();
+&#125; else &#123;
+  //? 没有访问权限的其他页面将重定向到登录页面(路由参数携带本身要跳转的页面路径)
+  next(`/login?redirect=$&#123;to.path&#125;`);
+  NProgress.done();
+&#125;
+</code></pre>
+<p>  }<br>});</p>
+<p>router.afterEach(() =&gt; {<br>  // finish progress bar<br>  NProgress.done();<br>});</p>
+</li>
+</ol>
+<p><strong>导航守卫的流程图</strong></p>
+<p><img src="https://zwb4461.oss-cn-shanghai.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E7%94%A8/%E5%89%8D%E7%AB%AF%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB.png"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/08/06/%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE%E9%A1%B5%E9%9D%A2%E6%A0%87%E9%A2%98/" rel="next" title="动态设置页面标题">
+                <i class="fa fa-chevron-left"></i> 动态设置页面标题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#js-cookie%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">js-cookie简介:</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%BC%95%E5%85%A5"><span class="nav-number">1.1.</span> <span class="nav-text">安装引入</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B"><span class="nav-number"></span> <span class="nav-text">登录流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#login-vue%E7%99%BB%E5%BD%95%E9%A1%B5%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">login.vue登录页面</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#store-modules-user%E4%B8%AD%E7%9A%84%E7%99%BB%E5%BD%95%E6%96%B9%E6%B3%95%E5%92%8C%E6%8B%89%E5%8F%96%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">store&#x2F;modules&#x2F;user中的登录方法和拉取用户信息方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#store-modules-user%E4%B8%AD%E7%9A%84%E7%99%BB%E5%BD%95%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">store&#x2F;modules&#x2F;user中的登录方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#src-permission-js%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB"><span class="nav-number">4.</span> <span class="nav-text">src&#x2F;permission.js导航守卫</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bbbbb</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
