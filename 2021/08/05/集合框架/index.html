@@ -79,17 +79,19 @@
 
 
 
-<meta name="description" content="集合概述 概念：对象的容器，定义了对多个对象进项操作的的常用方法。可实现数组的功能。  和数组的区别： ​    1. 数组长度固定，集合长度不固定。 ​    2. 数组可以存储基本类型和引用类型，集合只能存储引用类型。  位置： java.util.*;">
+<meta name="description" content="集合概述  概念:对象的容器,定义了对多个对象进行操作的常用方法。可以实现数组的功能。 和数组的区别： 数组长度固定，集合长度不固定。   数组可以存储基本类型和引用类型，集合只能存储引用类型。     位置： java.util.*;     Collection体系集合    Collection父接口 方法: boolean add(Object obj) &#x2F;&#x2F;添加一个对象。boolean">
 <meta property="og:type" content="article">
 <meta property="og:title" content="集合框架">
 <meta property="og:url" content="http://example.com/2021/08/05/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6/index.html">
 <meta property="og:site_name" content="bbbbb博客">
-<meta property="og:description" content="集合概述 概念：对象的容器，定义了对多个对象进项操作的的常用方法。可实现数组的功能。  和数组的区别： ​    1. 数组长度固定，集合长度不固定。 ​    2. 数组可以存储基本类型和引用类型，集合只能存储引用类型。  位置： java.util.*;">
+<meta property="og:description" content="集合概述  概念:对象的容器,定义了对多个对象进行操作的常用方法。可以实现数组的功能。 和数组的区别： 数组长度固定，集合长度不固定。   数组可以存储基本类型和引用类型，集合只能存储引用类型。     位置： java.util.*;     Collection体系集合    Collection父接口 方法: boolean add(Object obj) &#x2F;&#x2F;添加一个对象。boolean">
 <meta property="og:locale">
+<meta property="og:image" content="https://zwb4461.oss-cn-shanghai.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E7%94%A8/08051625.png">
 <meta property="article:published_time" content="2021-08-05T05:19:43.000Z">
-<meta property="article:modified_time" content="2021-08-05T06:32:57.483Z">
+<meta property="article:modified_time" content="2021-08-05T08:59:48.592Z">
 <meta property="article:author" content="bbbbb">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zwb4461.oss-cn-shanghai.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E7%94%A8/08051625.png">
 
 
 
@@ -341,17 +343,40 @@
       
 
       
-        <h1 id="集合概述"><a href="#集合概述" class="headerlink" title="集合概述"></a>集合概述</h1><ul>
-<li><p><strong>概念</strong>：对象的容器，定义了对多个对象进项操作的的常用方法。可实现数组的功能。</p>
+        <h3 id="集合概述"><a href="#集合概述" class="headerlink" title="集合概述"></a>集合概述</h3><hr>
+<ul>
+<li><strong>概念</strong>:对象的容器,定义了对多个对象进行操作的常用方法。可以实现数组的功能。</li>
+<li><strong>和数组的区别</strong>：<ol>
+<li><pre><code>数组长度固定，集合长度不固定。
+</code></pre>
 </li>
-<li><p><strong>和数组的区别</strong>：</p>
-<p>​    1. 数组长度固定，集合长度不固定。</p>
-<p>​    2. 数组可以存储基本类型和引用类型，集合只能存储引用类型。</p>
+<li><pre><code>数组可以存储基本类型和引用类型，集合只能存储引用类型。
+</code></pre>
 </li>
-<li><p><strong>位置</strong>： java.util.*;</p>
+</ol>
 </li>
-<li><hr/></li>
+<li><strong>位置</strong>： java.util.*;</li>
 </ul>
+<p>  </p>
+<h3 id="Collection体系集合"><a href="#Collection体系集合" class="headerlink" title="Collection体系集合"></a>Collection体系集合</h3><p> </p>
+<hr>
+<p><img src="https://zwb4461.oss-cn-shanghai.aliyuncs.com/%E5%8D%9A%E5%AE%A2%E7%94%A8/08051625.png"></p>
+<h3 id="Collection父接口"><a href="#Collection父接口" class="headerlink" title="Collection父接口"></a>Collection父接口</h3><ul>
+<li>方法:<ul>
+<li>boolean add(Object obj) //添加一个对象。boolean addAll(Collection c) //讲一个集合中的所有对象添加到此集合中。</li>
+<li>void clear() //清空此集合中的所有对象。</li>
+<li>boolean contains(Object o) //检查此集合中是否包含o对象。</li>
+<li>boolean equals(Object o) //比较此集合是否与指定对象相等。boolean isEmpty() //判断此集合是否为空。</li>
+<li>boolean remove(Object o) //在此集合中移除o对象。</li>
+<li>int size() //返回此集合中的元素个数。</li>
+<li>Object[] toArray() //姜此集合转换成数组。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Collection接口的使用（一）</span></span><br><span class="line"><span class="comment"> * 1.添加元素</span></span><br><span class="line"><span class="comment"> * 2.删除元素</span></span><br><span class="line"><span class="comment"> * 3.遍历元素</span></span><br><span class="line"><span class="comment"> * 4.判断</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo1</span></span>&#123;</span><br><span class="line">    <span class="function">pubic <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="comment">//创建集合</span></span><br><span class="line">        Collection collection=<span class="keyword">new</span> ArrayList();        </span><br><span class="line">        <span class="comment">//      * 1.添加元素</span></span><br><span class="line">        Collection.add(<span class="string">&quot;苹果&quot;</span>);</span><br><span class="line">        Collection.add(<span class="string">&quot;西瓜&quot;</span>);</span><br><span class="line">        Collection.add(<span class="string">&quot;榴莲&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;元素个数：&quot;</span>+collection.size());</span><br><span class="line">        System.out.println(collection);</span><br><span class="line">        <span class="comment">//      * 2.删除元素</span></span><br><span class="line">        collection.remove(<span class="string">&quot;榴莲&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;删除之后：&quot;</span>+collection.size());</span><br><span class="line">        <span class="comment">//      * 3.遍历元素</span></span><br><span class="line">        <span class="comment">//3.1 使用增强for </span></span><br><span class="line">        <span class="keyword">for</span>(Object object : collection)&#123;</span><br><span class="line">            System.out.println(object);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//3.2 使用迭代器（迭代器专门用来遍历集合的一种方式）</span></span><br><span class="line">        <span class="comment">//hasnext();判断是否有下一个元素</span></span><br><span class="line">        <span class="comment">//next();获取下一个元素</span></span><br><span class="line">        <span class="comment">//remove();删除当前元素</span></span><br><span class="line">        Iterator iterator=collection.Itertor();</span><br><span class="line">        <span class="keyword">while</span>(iterator.hasnext())&#123;</span><br><span class="line">            String object=(String)iterator.next();</span><br><span class="line">            System.out.println(s);</span><br><span class="line">            <span class="comment">//删除操作</span></span><br><span class="line">            <span class="comment">//collection.remove(s);引发错误：并发修改异常</span></span><br><span class="line">            <span class="comment">//iterator.remove();应使用迭代器的方法</span></span><br><span class="line">        <span class="comment">//      * 4.判断</span></span><br><span class="line">        System.out.println(collection.contains(<span class="string">&quot;西瓜&quot;</span>));<span class="comment">//true</span></span><br><span class="line">        System.out.println(collection.isEmpty());<span class="comment">//false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
 
       
     </div>
@@ -461,7 +486,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -472,7 +497,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -507,7 +532,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">集合概述</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">集合概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collection%E4%BD%93%E7%B3%BB%E9%9B%86%E5%90%88"><span class="nav-number">2.</span> <span class="nav-text">Collection体系集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Collection%E7%88%B6%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">Collection父接口</span></a></li></ol></div>
             
 
           </div>
