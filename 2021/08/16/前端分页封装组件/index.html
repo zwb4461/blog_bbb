@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="封装分页组件以便后面项目快速开发 分页组件&#x2F;components&#x2F;Pagination&#x2F;index.vue  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端分页封装组件">
+<meta property="og:url" content="http://example.com/2021/08/16/%E5%89%8D%E7%AB%AF%E5%88%86%E9%A1%B5%E5%B0%81%E8%A3%85%E7%BB%84%E4%BB%B6/index.html">
+<meta property="og:site_name" content="bbbbb博客">
+<meta property="og:description" content="封装分页组件以便后面项目快速开发 分页组件&#x2F;components&#x2F;Pagination&#x2F;index.vue  1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-08-16T02:46:01.000Z">
+<meta property="article:modified_time" content="2021-08-16T03:16:32.524Z">
+<meta property="article:author" content="bbbbb">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://example.com/2021/08/16/前端分页封装组件/"/>
+
+
+
+
+
+  <title>前端分页封装组件 | bbbbb博客</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">bbbbb博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">小b</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/16/%E5%89%8D%E7%AB%AF%E5%88%86%E9%A1%B5%E5%B0%81%E8%A3%85%E7%BB%84%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bbbbb博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前端分页封装组件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-16T10:46:01+08:00">
+                2021-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="封装分页组件以便后面项目快速开发"><a href="#封装分页组件以便后面项目快速开发" class="headerlink" title="封装分页组件以便后面项目快速开发"></a>封装分页组件以便后面项目快速开发</h3><ol>
+<li>分页组件/components/Pagination/index.vue</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">:class</span>=<span class="string">&quot;&#123; hidden: hidden &#125;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;pagination-container&quot;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="comment">&lt;!-- </span></span></span><br><span class="line"><span class="comment"><span class="xml">      @background: 是否为分页按钮添加背景色</span></span></span><br><span class="line"><span class="comment"><span class="xml">      @current-page.sync: 当前页数</span></span></span><br><span class="line"><span class="comment"><span class="xml">      @page-size.sync: 当页显示条数</span></span></span><br><span class="line"><span class="comment"><span class="xml">      @layout: 组件布局，子组件名用逗号分隔&#x27;prev, pager, next, jumper, -&gt;, total&#x27;</span></span></span><br><span class="line"><span class="comment"><span class="xml">      @page-sizes:每页显示个数选择器的选项设置	[10, 20, 30, 40, 50, 100]</span></span></span><br><span class="line"><span class="comment"><span class="xml">      @pager-count:页码按钮的数量，当总页数超过该值时会折叠</span></span></span><br><span class="line"><span class="comment"><span class="xml">      @total:总条数</span></span></span><br><span class="line"><span class="comment"><span class="xml">    --&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">el-pagination</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:background</span>=<span class="string">&quot;background&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:current-page.sync</span>=<span class="string">&quot;currentPage&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:page-size.sync</span>=<span class="string">&quot;pageSize&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:layout</span>=<span class="string">&quot;layout&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:page-sizes</span>=<span class="string">&quot;pageSizes&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:pager-count</span>=<span class="string">&quot;pagerCount&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">:total</span>=<span class="string">&quot;total&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      <span class="attr">v-bind</span>=<span class="string">&quot;$attrs&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      @<span class="attr">size-change</span>=<span class="string">&quot;handleSizeChange&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">      @<span class="attr">current-change</span>=<span class="string">&quot;handleCurrentChange&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">    /&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">import</span> &#123; scrollTo &#125; <span class="keyword">from</span> <span class="string">&quot;@/utils/scroll-to&quot;</span>;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">name</span>: <span class="string">&quot;Pagination&quot;</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">props</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">total</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">required</span>: <span class="literal">true</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">type</span>: <span class="built_in">Number</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">page</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">type</span>: <span class="built_in">Number</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">default</span>: <span class="number">1</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">limit</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">type</span>: <span class="built_in">Number</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">default</span>: <span class="number">20</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">pageSizes</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">type</span>: <span class="built_in">Array</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">default</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">50</span>];</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">pagerCount</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">type</span>: <span class="built_in">Number</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">default</span>: <span class="built_in">document</span>.body.clientWidth &lt; <span class="number">992</span> ? <span class="number">5</span> : <span class="number">7</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">layout</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">type</span>: <span class="built_in">String</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">default</span>: <span class="string">&quot;total, sizes, prev, pager, next, jumper&quot;</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">background</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">type</span>: <span class="built_in">Boolean</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">default</span>: <span class="literal">true</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">autoScroll</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">type</span>: <span class="built_in">Boolean</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">default</span>: <span class="literal">true</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">hidden</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">type</span>: <span class="built_in">Boolean</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="attr">default</span>: <span class="literal">false</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">computed</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">currentPage</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">get</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> <span class="built_in">this</span>.page;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">set</span>(<span class="params">val</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="built_in">this</span>.$emit(<span class="string">&quot;update:page&quot;</span>, val);</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="attr">pageSize</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">get</span>(<span class="params"></span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="keyword">return</span> <span class="built_in">this</span>.limit;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="function"><span class="title">set</span>(<span class="params">val</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        <span class="built_in">this</span>.$emit(<span class="string">&quot;update:limit&quot;</span>, val);</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">methods</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="function"><span class="title">handleSizeChange</span>(<span class="params">val</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="built_in">this</span>.$emit(<span class="string">&quot;pagination&quot;</span>, &#123; <span class="attr">page</span>: <span class="built_in">this</span>.currentPage, <span class="attr">limit</span>: val &#125;);</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="keyword">if</span> (<span class="built_in">this</span>.autoScroll) &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        scrollTo(<span class="number">0</span>, <span class="number">800</span>);</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="function"><span class="title">handleCurrentChange</span>(<span class="params">val</span>)</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="built_in">this</span>.$emit(<span class="string">&quot;pagination&quot;</span>, &#123; <span class="attr">page</span>: val, <span class="attr">limit</span>: <span class="built_in">this</span>.pageSize &#125;);</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      <span class="keyword">if</span> (<span class="built_in">this</span>.autoScroll) &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">        scrollTo(<span class="number">0</span>, <span class="number">800</span>);</span></span></span><br><span class="line"><span class="javascript"><span class="xml">      &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">&#125;;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span></span><br><span class="line"><span class="css"><span class="xml"><span class="selector-class">.pagination-container</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="comment">/* background: #e9ecf4; */</span></span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="attribute">padding</span>: <span class="number">32px</span> <span class="number">10px</span>;</span></span></span><br><span class="line"><span class="css"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"><span class="selector-class">.pagination-container</span><span class="selector-class">.hidden</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="attribute">display</span>: none;</span></span></span><br><span class="line"><span class="css"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="css"><span class="xml">::v-deep .el-pagination&#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">    display: flex;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="attribute">flex-direction</span>: row;</span></span></span><br><span class="line"><span class="css"><span class="xml">    <span class="attribute">justify-content</span>: flex-end;</span></span></span><br><span class="line"><span class="css"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>引入页面滑动工具包 utils/scroll-to.js</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">Math</span>.easeInOutQuad = <span class="function"><span class="keyword">function</span>(<span class="params">t, b, c, d</span>) </span>&#123;</span><br><span class="line">  t /= d / <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">if</span> (t &lt; <span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> (c / <span class="number">2</span>) * t * t + b;</span><br><span class="line">  &#125;</span><br><span class="line">  t--;</span><br><span class="line">  <span class="keyword">return</span> (-c / <span class="number">2</span>) * (t * (t - <span class="number">2</span>) - <span class="number">1</span>) + b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// requestAnimationFrame for Smart Animating http://goo.gl/sx5sts</span></span><br><span class="line"><span class="keyword">var</span> requestAnimFrame = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="built_in">window</span>.requestAnimationFrame ||</span><br><span class="line">    <span class="built_in">window</span>.webkitRequestAnimationFrame ||</span><br><span class="line">    <span class="built_in">window</span>.mozRequestAnimationFrame ||</span><br><span class="line">    <span class="function"><span class="keyword">function</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">window</span>.setTimeout(callback, <span class="number">1000</span> / <span class="number">60</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  );</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Because it&#x27;s so fucking difficult to detect the scrolling element, just move them all</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">amount</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">move</span>(<span class="params">amount</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">document</span>.documentElement.scrollTop = amount;</span><br><span class="line">  <span class="built_in">document</span>.body.parentNode.scrollTop = amount;</span><br><span class="line">  <span class="built_in">document</span>.body.scrollTop = amount;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">position</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="built_in">document</span>.documentElement.scrollTop ||</span><br><span class="line">    <span class="built_in">document</span>.body.parentNode.scrollTop ||</span><br><span class="line">    <span class="built_in">document</span>.body.scrollTop</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">to</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;number&#125;</span> <span class="variable">duration</span></span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Function&#125;</span> <span class="variable">callback</span></span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">scrollTo</span>(<span class="params">to, duration, callback</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> start = position();</span><br><span class="line">  <span class="keyword">const</span> change = to - start;</span><br><span class="line">  <span class="keyword">const</span> increment = <span class="number">20</span>;</span><br><span class="line">  <span class="keyword">let</span> currentTime = <span class="number">0</span>;</span><br><span class="line">  duration = <span class="keyword">typeof</span> duration === <span class="string">&quot;undefined&quot;</span> ? <span class="number">500</span> : duration;</span><br><span class="line">  <span class="keyword">var</span> animateScroll = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// increment the time</span></span><br><span class="line">    currentTime += increment;</span><br><span class="line">    <span class="comment">// find the value with the quadratic in-out easing function</span></span><br><span class="line">    <span class="keyword">var</span> val = <span class="built_in">Math</span>.easeInOutQuad(currentTime, start, change, duration);</span><br><span class="line">    <span class="comment">// move the document.body</span></span><br><span class="line">    move(val);</span><br><span class="line">    <span class="comment">// do the animation unless its over</span></span><br><span class="line">    <span class="keyword">if</span> (currentTime &lt; duration) &#123;</span><br><span class="line">      requestAnimFrame(animateScroll);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (callback &amp;&amp; <span class="keyword">typeof</span> callback === <span class="string">&quot;function&quot;</span>) &#123;</span><br><span class="line">        <span class="comment">// the animation is done so lets callback</span></span><br><span class="line">        callback();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  animateScroll();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>在main.js中引用以上</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 分页</span></span><br><span class="line"><span class="keyword">import</span> Pagination <span class="keyword">from</span> <span class="string">&quot;@/components/Pagination&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 全局组件挂载</span></span><br><span class="line">Vue.component(<span class="string">&quot;Pagination&quot;</span>, Pagination);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>在页面中使用</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// html</span></span><br><span class="line">&lt;!-- 分页 --&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">pagination</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">v-show</span>=<span class="string">&quot;total &gt; 0&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">:total</span>=<span class="string">&quot;total&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">:page.sync</span>=<span class="string">&quot;queryParams.pageNum&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  <span class="attr">:limit.sync</span>=<span class="string">&quot;queryParams.pageSize&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">  @<span class="attr">pagination</span>=<span class="string">&quot;getList&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="xml">/&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//data</span></span><br><span class="line"><span class="function"><span class="title">data</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line"> <span class="keyword">return</span> &#123;</span><br><span class="line">   <span class="comment">//? 分页相关</span></span><br><span class="line">   <span class="attr">queryParams</span>: &#123;</span><br><span class="line">     <span class="attr">pageNum</span>: <span class="number">1</span>,</span><br><span class="line">     <span class="attr">pageSize</span>: <span class="number">10</span>,</span><br><span class="line">   &#125;,</span><br><span class="line">   <span class="attr">total</span>: <span class="number">0</span>,</span><br><span class="line"> &#125;;</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="comment">//methods</span></span><br><span class="line"><span class="comment">//! 获取照片列表</span></span><br><span class="line"><span class="function"><span class="title">getList</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">  getPictureList(<span class="built_in">this</span>.queryParams).then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.tableData = res.data.list;</span><br><span class="line">    <span class="built_in">this</span>.total = res.data.total;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;,</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/08/11/%E5%89%8D%E7%AB%AF%E6%9D%83%E9%99%90%E8%AE%A4%E8%AF%81/" rel="next" title="前端权限认证">
+                <i class="fa fa-chevron-left"></i> 前端权限认证
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name"></p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E5%88%86%E9%A1%B5%E7%BB%84%E4%BB%B6%E4%BB%A5%E4%BE%BF%E5%90%8E%E9%9D%A2%E9%A1%B9%E7%9B%AE%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91"><span class="nav-number">1.</span> <span class="nav-text">封装分页组件以便后面项目快速开发</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bbbbb</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
