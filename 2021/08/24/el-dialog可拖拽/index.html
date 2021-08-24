@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="1.首先在路由中的mate设置title12345678910&amp;#123;    path: &amp;#x27;&#x2F;home&amp;#x27;,    component: Layout,    name: &amp;#x27;Home&amp;#x27;,    meta: &amp;#123;         &#x2F;&#x2F;这里定义标题名称        title: &amp;#x27;首页&amp;#x27;,         icon: &amp;#x27;">
+<meta name="description" content="一、在utils下创建dialog.js123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051import Vue from &amp;#x27;vue&amp;#x27;&#x2F;&#x2F; v-dialogDrag: 弹窗拖拽Vue.directive(&amp;#x27;dialogDrag&amp;#x27">
 <meta property="og:type" content="article">
-<meta property="og:title" content="动态设置页面标题">
-<meta property="og:url" content="http://example.com/2021/08/06/%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE%E9%A1%B5%E9%9D%A2%E6%A0%87%E9%A2%98/index.html">
+<meta property="og:title" content="el-dialog可拖拽">
+<meta property="og:url" content="http://example.com/2021/08/24/el-dialog%E5%8F%AF%E6%8B%96%E6%8B%BD/index.html">
 <meta property="og:site_name" content="bbbbb博客">
-<meta property="og:description" content="1.首先在路由中的mate设置title12345678910&amp;#123;    path: &amp;#x27;&#x2F;home&amp;#x27;,    component: Layout,    name: &amp;#x27;Home&amp;#x27;,    meta: &amp;#123;         &#x2F;&#x2F;这里定义标题名称        title: &amp;#x27;首页&amp;#x27;,         icon: &amp;#x27;">
+<meta property="og:description" content="一、在utils下创建dialog.js123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051import Vue from &amp;#x27;vue&amp;#x27;&#x2F;&#x2F; v-dialogDrag: 弹窗拖拽Vue.directive(&amp;#x27;dialogDrag&amp;#x27">
 <meta property="og:locale">
-<meta property="article:published_time" content="2021-08-06T07:01:49.000Z">
-<meta property="article:modified_time" content="2021-08-06T07:26:43.797Z">
+<meta property="article:published_time" content="2021-08-24T02:36:06.000Z">
+<meta property="article:modified_time" content="2021-08-24T02:38:14.679Z">
 <meta property="article:author" content="bbbbb">
 <meta name="twitter:card" content="summary">
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/08/06/动态设置页面标题/"/>
+  <link rel="canonical" href="http://example.com/2021/08/24/el-dialog可拖拽/"/>
 
 
 
 
 
-  <title>动态设置页面标题 | bbbbb博客</title>
+  <title>el-dialog可拖拽 | bbbbb博客</title>
   
 
 
@@ -252,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/06/%E5%8A%A8%E6%80%81%E8%AE%BE%E7%BD%AE%E9%A1%B5%E9%9D%A2%E6%A0%87%E9%A2%98/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/24/el-dialog%E5%8F%AF%E6%8B%96%E6%8B%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -269,7 +269,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">动态设置页面标题</h1>
+          <h1 class="post-title" itemprop="name headline">el-dialog可拖拽</h1>
         
 
         <div class="post-meta">
@@ -281,8 +281,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-06T15:01:49+08:00">
-                2021-08-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-08-24T10:36:06+08:00">
+                2021-08-24
               </time>
             
 
@@ -304,8 +304,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/vue-admin-template/" itemprop="url" rel="index">
-                    <span itemprop="name">vue-admin-template</span>
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
                   </a>
                 </span>
 
@@ -341,20 +341,12 @@
       
 
       
-        <h6 id="1-首先在路由中的mate设置title"><a href="#1-首先在路由中的mate设置title" class="headerlink" title="1.首先在路由中的mate设置title"></a>1.首先在路由中的mate设置title</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/home&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: Layout,</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;Home&#x27;</span>,</span><br><span class="line">    <span class="attr">meta</span>: &#123; </span><br><span class="line">        <span class="comment">//这里定义标题名称</span></span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;首页&#x27;</span>, </span><br><span class="line">        <span class="attr">icon</span>: <span class="string">&#x27;el-icon-s-help&#x27;</span> </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="一、在utils下创建dialog-js"><a href="#一、在utils下创建dialog-js" class="headerlink" title="一、在utils下创建dialog.js"></a>一、在utils下创建dialog.js</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// v-dialogDrag: 弹窗拖拽</span></span><br><span class="line">Vue.directive(<span class="string">&#x27;dialogDrag&#x27;</span>, &#123;</span><br><span class="line">  <span class="function"><span class="title">bind</span>(<span class="params">el, binding, vnode, oldVnode</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> dialogHeaderEl = el.querySelector(<span class="string">&#x27;.el-dialog__header&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> dragDom = el.querySelector(<span class="string">&#x27;.el-dialog&#x27;</span>)</span><br><span class="line">    dialogHeaderEl.style.cursor = <span class="string">&#x27;move&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取原有属性 ie dom元素.currentStyle 火狐谷歌 window.getComputedStyle(dom元素, null);</span></span><br><span class="line">    <span class="keyword">const</span> sty = dragDom.currentStyle || <span class="built_in">window</span>.getComputedStyle(dragDom, <span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line">    dialogHeaderEl.onmousedown = <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 鼠标按下，计算当前元素距离可视区的距离</span></span><br><span class="line">      <span class="keyword">const</span> disX = e.clientX - dialogHeaderEl.offsetLeft</span><br><span class="line">      <span class="keyword">const</span> disY = e.clientY - dialogHeaderEl.offsetTop</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 获取到的值带px 正则匹配替换</span></span><br><span class="line">      <span class="keyword">let</span> styL, styT</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 注意在ie中 第一次获取到的值为组件自带50% 移动之后赋值为px</span></span><br><span class="line">      <span class="keyword">if</span> (sty.left.includes(<span class="string">&#x27;%&#x27;</span>)) &#123;</span><br><span class="line">        styL = +<span class="built_in">document</span>.body.clientWidth * (+sty.left.replace(<span class="regexp">/\%/g</span>, <span class="string">&#x27;&#x27;</span>) / <span class="number">100</span>)</span><br><span class="line">        styT = +<span class="built_in">document</span>.body.clientHeight * (+sty.top.replace(<span class="regexp">/\%/g</span>, <span class="string">&#x27;&#x27;</span>) / <span class="number">100</span>)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        styL = +sty.left.replace(<span class="regexp">/\px/g</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        styT = +sty.top.replace(<span class="regexp">/\px/g</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="built_in">document</span>.onmousemove = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 通过事件委托，计算移动的距离</span></span><br><span class="line">        <span class="keyword">const</span> l = e.clientX - disX</span><br><span class="line">        <span class="keyword">const</span> t = e.clientY - disY</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 移动当前元素</span></span><br><span class="line">        dragDom.style.left = <span class="string">`<span class="subst">$&#123;l + styL&#125;</span>px`</span></span><br><span class="line">        dragDom.style.top = <span class="string">`<span class="subst">$&#123;t + styT&#125;</span>px`</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 将此时的位置传出去</span></span><br><span class="line">        <span class="comment">// binding.value(&#123;x:e.pageX,y:e.pageY&#125;)</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="built_in">document</span>.onmouseup = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">document</span>.onmousemove = <span class="literal">null</span></span><br><span class="line">        <span class="built_in">document</span>.onmouseup = <span class="literal">null</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h6 id="2-编写设置页面标题的js工具类（utils包下）"><a href="#2-编写设置页面标题的js工具类（utils包下）" class="headerlink" title="2.编写设置页面标题的js工具类（utils包下）"></a>2.编写设置页面标题的js工具类（utils包下）</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//? 设置标题的工具</span></span><br><span class="line"><span class="keyword">const</span> title = <span class="string">&quot;个人管理&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">getPageTitle</span>(<span class="params">pageTitle</span>) </span>&#123;</span><br><span class="line">  <span class="comment">//? 如果router中的meta有title 标题则设为title-个人管理</span></span><br><span class="line">  <span class="comment">//? pageTitle:方法传入的形参</span></span><br><span class="line">  <span class="comment">//? title:该页面定义的总标题</span></span><br><span class="line">  <span class="keyword">if</span> (pageTitle) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;pageTitle&#125;</span> - <span class="subst">$&#123;title&#125;</span>`</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//? 如果该路由没有设置meta.title 则使用总标题</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;title&#125;</span>`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h6 id="3-在导航守卫中调用工具类并设置标题"><a href="#3-在导航守卫中调用工具类并设置标题" class="headerlink" title="3.在导航守卫中调用工具类并设置标题"></a>3.在导航守卫中调用工具类并设置标题</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">router.beforeEach(<span class="keyword">async</span> (to, <span class="keyword">from</span>, next) =&gt; &#123;</span><br><span class="line">  ·······其它代码·······</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//? 设置页面标题</span></span><br><span class="line">  <span class="built_in">document</span>.title = getPageTitle(to.meta.title);</span><br><span class="line"></span><br><span class="line">  ·······其它代码·······</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="二、在main-js中引入"><a href="#二、在main-js中引入" class="headerlink" title="二、在main.js中引入"></a>二、在main.js中引入</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./utils/dialog&#x27;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<ul>
-<li>方法解释</li>
-</ul>
-<p>document.title：</p>
-<ol>
-<li><code>title</code> 是一个包含 <code>document</code> 标题的字符串。如果通过设置 <code>document.title</code> 将标题覆盖，则返回覆盖后的值。否则返回标签里指定的标题</li>
-<li>还会影响文档的 DOM，即改变 HTML 文档中 <code>&lt;title&gt;</code> 元素的内容</li>
-</ol>
+<h3 id="三、给-el-dialog-添加-v-dialogDrag属性"><a href="#三、给-el-dialog-添加-v-dialogDrag属性" class="headerlink" title="三、给 el-dialog 添加 v-dialogDrag属性"></a>三、给 el-dialog 添加 v-dialogDrag属性</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;el-dialog v-dialogDrag&gt;&lt;/el-dialog&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -379,8 +371,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2021/08/05/%E6%8E%A5%E5%8F%A3%E8%BF%94%E5%9B%9E%E6%96%87%E4%BB%B6%E6%B5%81%EF%BC%8C%E5%89%8D%E7%AB%AF%E6%8E%A5%E6%94%B6%E5%B9%B6%E4%B8%8B%E8%BD%BD/" rel="next" title="接口返回文件流，前端接收并下载">
-                <i class="fa fa-chevron-left"></i> 接口返回文件流，前端接收并下载
+              <a href="/2021/08/20/%E5%A4%9A%E5%AF%B9%E5%A4%9A-%E4%B8%AD%E9%97%B4%E8%A1%A8%E5%85%B3%E8%81%94%E6%9F%A5%E8%AF%A2/" rel="next" title="多对多-中间表关联查询">
+                <i class="fa fa-chevron-left"></i> 多对多-中间表关联查询
               </a>
             
           </div>
@@ -388,10 +380,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2021/08/06/%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B%E3%80%81%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB/" rel="prev" title="登录流程、导航守卫、js-cookie的使用">
-                登录流程、导航守卫、js-cookie的使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -514,7 +502,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E9%A6%96%E5%85%88%E5%9C%A8%E8%B7%AF%E7%94%B1%E4%B8%AD%E7%9A%84mate%E8%AE%BE%E7%BD%AEtitle"><span class="nav-number">1.</span> <span class="nav-text">1.首先在路由中的mate设置title</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-%E7%BC%96%E5%86%99%E8%AE%BE%E7%BD%AE%E9%A1%B5%E9%9D%A2%E6%A0%87%E9%A2%98%E7%9A%84js%E5%B7%A5%E5%85%B7%E7%B1%BB%EF%BC%88utils%E5%8C%85%E4%B8%8B%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">2.编写设置页面标题的js工具类（utils包下）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-%E5%9C%A8%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB%E4%B8%AD%E8%B0%83%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%B9%B6%E8%AE%BE%E7%BD%AE%E6%A0%87%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">3.在导航守卫中调用工具类并设置标题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%9C%A8utils%E4%B8%8B%E5%88%9B%E5%BB%BAdialog-js"><span class="nav-number">1.</span> <span class="nav-text">一、在utils下创建dialog.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%9C%A8main-js%E4%B8%AD%E5%BC%95%E5%85%A5"><span class="nav-number">2.</span> <span class="nav-text">二、在main.js中引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%BB%99-el-dialog-%E6%B7%BB%E5%8A%A0-v-dialogDrag%E5%B1%9E%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">三、给 el-dialog 添加 v-dialogDrag属性</span></a></li></ol></div>
             
 
           </div>
